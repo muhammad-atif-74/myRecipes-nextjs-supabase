@@ -10,7 +10,7 @@ const BrowseNow = () => {
                         <span className="text-primary"> Meal Planning?</span>
                     </h2>
 
-                    <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-full md:max-w-2xl mx-auto leading-relaxed">
                         Join thousands of users who have revolutionized their cooking experience with our intelligent meal planning platform.
                     </p>
 
