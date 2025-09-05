@@ -7,7 +7,7 @@ const Hero = () => {
     return (
         <section>
             <div className="container">
-                <div className="hero min-h-[70vh] flex flex-col-reverse md:flex-row md:space-x-16 items-center  md:space-y-0">
+                <div className="hero h-auto md:min-h-[70vh] flex flex-col-reverse md:flex-row md:space-x-16 items-center  md:space-y-0">
                     {/* Content Section */}
                     <div className="content w-full md:w-1/2 text-center md:text-left mt-8 md:mt-0">
                         <h1 className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold mb-4 sm:mb-6'>
@@ -31,7 +31,7 @@ const Hero = () => {
                         <div className="image-container w-full overflow-hidden rounded-xl relative">
                             <BlurredOverlayLabel title="Nutrition Analysis" analytic="1K+" top={"top-4 sm:top-8"} right={"right-4 sm:right-8"} />
                             <Image
-                                src="/images/heroImage.svg"
+                                src="/images/heroImage.jpg"
                                 alt="Hero Image"
                                 width={0}
                                 height={0}

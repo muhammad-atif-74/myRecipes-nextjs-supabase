@@ -47,3 +47,16 @@ body {
 .custom_button {
   @apply bg-primary text-white px-6 py-4 rounded-full hover:bg-primary-hover transition cursor-pointer;
 }
+
+
+.custom_button_secondary {
+  @apply bg-secondary text-white px-6 py-4 rounded-full hover:bg-secondary-hover transition cursor-pointer;
+}
+
+.custom_button_outline_primary {
+  @apply bg-transparent border-2 border-primary text-primary px-6 py-4 rounded-full hover:bg-primary hover:text-white transition cursor-pointer;
+}
+
+.custom_button_outline_secondary {
+  @apply bg-transparent border-2 border-secondary text-secondary px-6 py-4 rounded-full hover:bg-secondary hover:text-white transition cursor-pointer;
+}

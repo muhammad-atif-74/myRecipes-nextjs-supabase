@@ -15,7 +15,7 @@ const Features = () => {
             id: 2,
             title: "Automatic Meal Plan",
             description: "Get personalized meal plans generated based on your preferences",
-            image: "/images/heroImage.svg",
+            image: "/images/recipe3.jpg",
             className: "bg-white"
         },
         {
