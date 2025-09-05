@@ -1,4 +1,5 @@
 "use client"
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react'
 
@@ -13,8 +14,8 @@ const navLinks = [
     },
     {
         id: 2,
-        name: "About",
-        link: "/about"
+        name: "Browse",
+        link: "/browse"
     },
     {
         id: 3,
@@ -36,7 +37,7 @@ const Navbar = () => {
                         <ul className="flex bg-gray-200 p-2 rounded-full">
                             {
                                 navLinks.map((link) => (
-                                    <li key={link.id} className={`px-3 mx-2 cursor-pointer py-2 transition ${pathName === link.link && isActive} ${isHovering}`}>{link.name}</li>
+                                    <Link href={link.link} key={link.id} className={`px-3 mx-2 cursor-pointer py-2 transition ${pathName === link.link && isActive} ${isHovering}`}>{link.name}</Link>
                                 ))
                             }
                         </ul>
