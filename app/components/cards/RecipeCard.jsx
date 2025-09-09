@@ -125,7 +125,7 @@ const RecipeCard = ({
                 </Link>
 
                 {/* Ingredients Pills */}
-                <div className="mb-4">
+                <div className="mb-4 min-h-[70px]">
                     <div className="flex flex-wrap gap-2">
                         {recipe.ingredients.slice(0, 3).map((ingredient, index) => (
                             <span

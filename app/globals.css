@@ -24,6 +24,7 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-poppins: var(--font-poppins);
+  --font-lora: var(--font-lora)
 }
 
 @media (prefers-color-scheme: dark) {
@@ -39,9 +40,17 @@ body {
   font-family: var(--font-poppins);
 }
 
+.font-lora {
+  font-family: var(--font-lora);
+}
+
 .container {
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 2rem;
+}
+
+.container-narrow {
+  @apply px-[1rem] md:px-[12rem] mx-auto;
 }
 
 .custom_button {
@@ -59,4 +68,22 @@ body {
 
 .custom_button_outline_secondary {
   @apply bg-transparent border-2 border-secondary text-secondary px-6 py-4 rounded-full hover:bg-secondary hover:text-white transition cursor-pointer;
+}
+
+.recipeIngredients .ingredient {
+  @apply relative;
+}
+.recipeIngredients .ingredient::before {
+  content: '';
+  position: absolute;
+  left: -40px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--primary);
+  background-color: transparent;
+  margin: auto 0;
 }

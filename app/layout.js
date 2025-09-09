@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/common/Navbar";
-import { poppins } from "./ui/fonts";
+import { poppins, lora } from "./ui/fonts";
 import Footer from "./components/sections/Footer";
 
 const geistSans = Geist({
@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         cz-shortcut-listen="true"
-        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} ${lora.variable} antialiased`}
       >
         <Navbar />
         {children}
