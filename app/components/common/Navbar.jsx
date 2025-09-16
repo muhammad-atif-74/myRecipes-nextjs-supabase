@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react'
 
-const isActive = "bg-white text-primary px-4 rounded-full hover:text-white shadow-sm";
+const isActive = "bg-white text-primary px-4 rounded-full shadow-sm";
 const isHovering = "hover:bg-gray-50 hover:text-primary px-4 rounded-full ";
 
 const navLinks = [
@@ -43,7 +43,9 @@ const Navbar = () => {
                         </ul>
                     </div>
                     <div className="register">
+                        <Link href={'/register'}>
                         <button className='custom_button'>Register</button>
+                        </Link>
                     </div>
                 </div>
             </div>
