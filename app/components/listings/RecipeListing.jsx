@@ -1,6 +1,6 @@
 import React from 'react'
 import RecipeCard from '../cards/RecipeCard'
-import { sampleRecipes } from '@/public/data/recipesData'
+import { sampleRecipes } from '../../../public/data/recipesData'
 
 const RecipeListing = ({ title = "Recipe Listings" }) => {
     return (

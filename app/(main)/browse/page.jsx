@@ -2,7 +2,7 @@ import React from 'react'
 import RecipeSearch from '../../components/browse/RecipeSearch'
 import RecipeListing from '../../components/listings/RecipeListing'
 import CarouselListing from '../../components/listings/CarouselListing'
-import { sampleRecipes } from '@/public/data/recipesData'
+import { sampleRecipes } from '../../../public/data/recipesData'
 
 const page = () => {
     return (

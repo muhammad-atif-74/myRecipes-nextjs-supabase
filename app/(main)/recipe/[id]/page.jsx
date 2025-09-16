@@ -1,6 +1,6 @@
-import ChefRecipeCard from '@/app/components/cards/ChefRecipeCard';
-import RecipeReviews from '@/app/components/sections/RecipeReviews';
-import { sampleRecipes } from '@/public/data/recipesData'
+import ChefRecipeCard from '../../../components/cards/ChefRecipeCard';
+import RecipeReviews from '../../../components/sections/RecipeReviews';
+import { sampleRecipes } from '../../../public/data/recipesData'
 import Image from 'next/image'
 import React from 'react'
 import { FaFacebook, FaRegClock } from 'react-icons/fa6'
