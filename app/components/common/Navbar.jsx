@@ -1,4 +1,6 @@
 "use client"
+import { supabase } from '@/app/lib/supabaseClient';
+import { useAuthStore } from '@/app/store/useAuthStore';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react'
@@ -26,6 +28,13 @@ const navLinks = [
 
 const Navbar = () => {
     const pathName = usePathname();
+    const user = useAuthStore(state => state.user)
+
+
+    const handleLogout = async () => {
+        await supabase.auth.signOut();
+    }
+
     return (
         <nav className='bg-transparent w-full py-4'>
             <div className="container">
@@ -43,9 +52,25 @@ const Navbar = () => {
                         </ul>
                     </div>
                     <div className="register">
-                        <Link href={'/register'}>
-                        <button className='custom_button'>Register</button>
-                        </Link>
+                        {
+                            user ? (
+                                <>
+                                    <div className="flex items-center space-x-2" >
+                                        <Link href="/dashboard">
+                                            <button className='custom_button'>Dashboard</button>
+                                        </Link>
+                                        <button onClick={handleLogout} className='custom_button_outline_primary'>Logout</button>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <Link href={'/register'}>
+                                        <button className='custom_button'>Register</button>
+                                    </Link>
+                                </>
+                            )
+                        }
+
                     </div>
                 </div>
             </div>

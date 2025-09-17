@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { poppins, lora } from "./ui/fonts";
+import AuthClient from "./components/auth/authClient";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
         cz-shortcut-listen="true"
         className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} ${lora.variable} antialiased`}
       >
+        <AuthClient />
         {children}
       </body>
     </html>

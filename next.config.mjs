@@ -1,14 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    middleware: true,
+  },
   images: {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '**', 
+        hostname: '**',
       },
       {
         protocol: 'http',
-        hostname: '**', 
+        hostname: '**',
       },
     ],
   },

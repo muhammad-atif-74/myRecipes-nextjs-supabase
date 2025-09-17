@@ -1,4 +1,4 @@
-import { supabase } from '../../lib/supabaseClient'
+import { supabase } from '../lib/supabaseClient'
 
 export const registerUser = async (formData) => {
     try {
@@ -31,6 +31,24 @@ export const loginUser = async (formData) => {
         const { data, error } = await supabase.auth.signInWithPassword({
             email: formData.email,
             password: formData.password,
+        });
+
+        if (error) throw new Error(error.message);
+        return data;
+    }
+    catch (err) {
+        console.log(err)
+        throw new Error(err);
+    }
+}
+
+export const signInWithGoogle = async () => {
+    try {
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                redirectTo: process.env.NEXT_PUBLIC_GOOGLE_AUTH_CALLBACK_URL
+            }
         });
 
         if (error) throw new Error(error.message);

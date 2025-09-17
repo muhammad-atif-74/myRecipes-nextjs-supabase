@@ -54,7 +54,7 @@ body {
 }
 
 .custom_button {
-  @apply bg-primary text-white px-6 py-4 rounded-full hover:bg-primary-hover transition cursor-pointer;
+  @apply bg-primary text-white px-6 py-4 border border-primary rounded-full hover:bg-primary-hover transition cursor-pointer;
 }
 
 

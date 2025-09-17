@@ -3,8 +3,9 @@
 import React, { useEffect, useState } from 'react'
 import { FaKey, FaRegEnvelope, FaUser, FaEye, FaEyeSlash } from 'react-icons/fa6'
 import { FcGoogle } from 'react-icons/fc'
-import { addUserProfile, registerUser } from '../../(auth)/register/action'
+import { addUserProfile, registerUser, signInWithGoogle } from '../../(auth)/action'
 import { Bounce, toast, ToastContainer } from 'react-toastify'
+import Link from 'next/link'
 
 const RegisterForm = () => {
     const [formData, setFormData] = useState({
@@ -38,14 +39,13 @@ const RegisterForm = () => {
             }
 
             const data = await registerUser(formData);
-
-            const addUserData = await addUserProfile({
+            await addUserProfile({
                 id: data?.user.id,
                 email: data?.user?.email,
                 role: 'user',
                 avatar_url: '',
                 full_name: ''
-            })
+            });
             toast("Account created successfully, redirecting to dashboard...")
             console.log("Success:", data);
         } catch (err) {
@@ -56,9 +56,15 @@ const RegisterForm = () => {
     };
 
 
-    const handleGoogleSignIn = () => {
-        // Google sign-in functionality will be implemented later
-        console.log('Google sign-in clicked')
+    const handleGoogleSignIn = async () => {
+        try {
+            const data = await signInWithGoogle();
+            console.log("Sign in with google's data: ", data)
+        }
+        catch (err) {
+            console.error("Google Sign-In Error:", err);
+            toast.error(err.message ?? "Google sign-in failed. Please try again.");
+        }
     }
 
     const handleForgotPassword = () => {
@@ -188,12 +194,12 @@ const RegisterForm = () => {
                     <div className="text-center pt-2">
                         <p className="text-gray-600">
                             Already have an account?{' '}
-                            <a
+                            <Link
                                 href="/login"
                                 className="text-secondary hover:text-secondary-hover font-semibold transition-colors underline"
                             >
                                 Sign in
-                            </a>
+                            </Link>
                         </p>
                     </div>
                 </form>
