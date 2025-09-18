@@ -82,3 +82,25 @@ export const addUserProfile = async (userData) => {
         throw new Error(err);
     }
 }
+
+export async function ensureUserProfile(user) {
+    try {
+        const { data: existingUser } = await supabase
+            .from("users")
+            .select("id")
+            .eq("id", user.id)
+            .single();
+
+        if (!existingUser) {
+            await supabase.from("users").insert({
+                id: user.id,
+                email: user.email,
+                role: "user",
+                full_name: user.user_metadata?.full_name || "",
+                avatar_url: user.user_metadata?.avatar_url || "",
+            });
+        }
+    } catch (err) {
+        console.error("Failed to ensure user profile:", err);
+    }
+}

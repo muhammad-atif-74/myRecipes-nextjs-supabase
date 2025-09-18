@@ -6,6 +6,7 @@ import { FcGoogle } from 'react-icons/fc'
 import { addUserProfile, registerUser, signInWithGoogle } from '../../(auth)/action'
 import { Bounce, toast, ToastContainer } from 'react-toastify'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 const RegisterForm = () => {
     const [formData, setFormData] = useState({
@@ -19,6 +20,8 @@ const RegisterForm = () => {
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+
+    const router = useRouter()
 
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target
@@ -39,15 +42,16 @@ const RegisterForm = () => {
             }
 
             const data = await registerUser(formData);
-            await addUserProfile({
-                id: data?.user.id,
-                email: data?.user?.email,
-                role: 'user',
-                avatar_url: '',
-                full_name: ''
-            });
+            // await addUserProfile({
+            //     id: data?.user.id,
+            //     email: data?.user?.email,
+            //     role: 'user',
+            //     avatar_url: '',
+            //     full_name: ''
+            // });
             toast("Account created successfully, redirecting to dashboard...")
             console.log("Success:", data);
+            router.push('/')
         } catch (err) {
             toast.error(err.message || "Something went wrong. Please try again.");
         } finally {
@@ -59,7 +63,16 @@ const RegisterForm = () => {
     const handleGoogleSignIn = async () => {
         try {
             const data = await signInWithGoogle();
-            console.log("Sign in with google's data: ", data)
+            // await addUserProfile({
+            //     id: data?.user.id,
+            //     email: data?.user?.email,
+            //     role: 'user',
+            //     avatarUrl: '',
+            //     fullName: ''  
+            // });
+
+            console.log("Signed in with google's data: ", data)
+            // router.push('/')
         }
         catch (err) {
             console.error("Google Sign-In Error:", err);

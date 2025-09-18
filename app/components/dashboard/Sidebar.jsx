@@ -29,10 +29,10 @@ const Sidebar = () => {
         <>
             <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 <div className="flex items-center justify-between h-16 px-6 bg-white border-b border-gray-200">
-                    <div className="flex items-center space-x-2">
+                    <Link href={'/'} className="flex items-center space-x-2">
                         {/* <FaSpoon className="text-2xl text-primary" /> */}
                         <span className="text-xl font-bold font-lora text-gray-800"><span className='text-primary'>My</span><span className='text-secondary'>Recipes</span></span>
-                    </div>
+                    </Link>
                     <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-gray-500 hover:text-gray-700">
                         <FiX size={20} />
                     </button>

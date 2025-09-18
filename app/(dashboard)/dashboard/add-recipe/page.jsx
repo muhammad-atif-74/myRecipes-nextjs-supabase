@@ -10,9 +10,10 @@ import {
     FiSave,
     FiEye
 } from 'react-icons/fi'
-import { ImSpoonKnife } from "react-icons/im"
 import Image from 'next/image'
-import DashboardLayout from '../../layout'
+import { toast, ToastContainer } from 'react-toastify'
+import { addNewRecipe, uploadFile } from '@/app/lib/action'
+import { useAuthStore } from '@/app/store/useAuthStore'
 
 const AddRecipePage = () => {
     const [formData, setFormData] = useState({
@@ -29,6 +30,8 @@ const AddRecipePage = () => {
         tags: '',
         videoUrl: ''
     })
+
+    const user = useAuthStore(state => state.user)
 
     const [imagePreview, setImagePreview] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
@@ -47,6 +50,23 @@ const AddRecipePage = () => {
             [name]: value
         }))
     }
+
+    const resetForm = () => {
+        setFormData({
+            title: '',
+            description: '',
+            category: '',
+            prepTime: '',
+            cookTime: '',
+            serves: '',
+            difficulty: 'Easy',
+            image: null,
+            ingredients: [''],
+            directions: [''],
+            tags: '',
+            videoUrl: ''
+        });
+    };
 
     const handleImageUpload = (e) => {
         const file = e.target.files[0]
@@ -97,16 +117,61 @@ const AddRecipePage = () => {
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        setIsLoading(true)
+        e.preventDefault();
+        setIsLoading(true);
 
-        // Simulate API call
-        setTimeout(() => {
-            console.log('Recipe submitted:', formData)
-            setIsLoading(false)
-            // You can add success message or redirect here
-        }, 2000)
-    }
+        try {
+            if (!formData.title || !formData.description || !formData.category) {
+                toast.error("Please fill in all required fields (title, description, category).");
+                return;
+            }
+
+            if (!formData.image) {
+                toast.error("Recipe image is required.");
+                return;
+            }
+
+            if (!user?.id) {
+                toast.error("You must be logged in to add a recipe.");
+                return;
+            }
+
+            console.log("Uploading file")
+
+            const { path, success } = await uploadFile(formData.image, "images");
+            if (!success) {
+                toast.error("Something went wrong while uploading the image.");
+                return;
+            }
+            console.log("Adding recipe")
+
+            const data = await addNewRecipe({
+                title: formData.title,
+                description: formData.description,
+                category: formData.category,
+                difficulty: formData.difficulty,
+                prep_time: parseInt(formData.prepTime) || 0,
+                cook_time: parseInt(formData.cookTime) || 0,
+                serves: parseInt(formData.serves) || 1,
+                ingredients: formData.ingredients,
+                directions: formData.directions,
+                tags: formData.tags,
+                video_url: formData.videoUrl,
+                image_url: path, // Supabase storage path
+                user_id: user.id,
+            });
+
+            toast.success("Recipe Uploaded Successfully 🎉");
+            console.log("Inserted recipe:", data);
+            resetForm()
+        } catch (err) {
+            toast.error(err.message || "Something went wrong.");
+            console.error("Submit error:", err);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
 
     const handlePreview = () => {
         // Preview functionality will be implemented later
@@ -115,6 +180,7 @@ const AddRecipePage = () => {
 
     return (
         <main>
+            <ToastContainer />
             <div className="p-6">
                 <div className="max-w-8xl mx-auto">
                     {/* Header */}
