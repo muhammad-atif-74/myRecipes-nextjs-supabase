@@ -29,7 +29,7 @@ const navLinks = [
 const Navbar = () => {
     const pathName = usePathname();
     const user = useAuthStore(state => state.user)
-
+    // console.log(user)
 
     const handleLogout = async () => {
         await supabase.auth.signOut();

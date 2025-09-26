@@ -1,4 +1,3 @@
-import { sampleRecipes } from '@/public/data/recipesData';
 import ChefRecipeCard from '../../../components/cards/ChefRecipeCard';
 import RecipeReviews from '../../../components/sections/RecipeReviews';
 import Image from 'next/image'
@@ -6,9 +5,23 @@ import React from 'react'
 import { FaFacebook, FaRegClock } from 'react-icons/fa6'
 import { FiFacebook, FiInstagram, FiTwitter } from 'react-icons/fi';
 import { ImSpoonKnife } from "react-icons/im";
+import { getRecipeById } from '@/app/lib/action';
 
-const page = () => {
-    const recipe = sampleRecipes[0]
+
+export async function generateMetadata({ params }) {
+    const { id } = params;
+    const recipe = await getRecipeById(id);
+
+    return {
+        title: `${recipe.title} | MyRecipe`,
+        description: recipe.description,
+        keywords: recipe.category,
+    };
+}
+
+const page = async ({ params }) => {
+    const { id } = params;
+    const recipe = await getRecipeById(id);
 
     return (
         <>
@@ -37,21 +50,21 @@ const page = () => {
                                 <div><FaRegClock className='mt-[1px] text-gray-500' /></div>
                                 <div>
                                     <p className='text-gray-500 font-light text-sm'>PREP</p>
-                                    <h5 className='text-lg'>15 minutes</h5>
+                                    <h5 className='text-lg'>{recipe.prep_time} minutes</h5>
                                 </div>
                             </div>
                             <div className="flex items-start gap-4 mb-6">
                                 <div><FaRegClock className='mt-[1px] text-gray-500' /></div>
                                 <div>
                                     <p className='text-gray-500 font-light text-sm'>COOK</p>
-                                    <h5 className='text-lg'>15 minutes</h5>
+                                    <h5 className='text-lg'>{recipe.cook_time} minutes</h5>
                                 </div>
                             </div>
                             <div className="flex items-start gap-4 mb-6">
                                 <div><ImSpoonKnife className='mt-[1px] text-gray-500' /></div>
                                 <div>
                                     <p className='text-gray-500 font-light text-sm'>SERVES</p>
-                                    <h5 className='text-lg'>4 people</h5>
+                                    <h5 className='text-lg'>{recipe.serves} people</h5>
                                 </div>
                             </div>
                         </aside>
@@ -63,9 +76,9 @@ const page = () => {
             <section className="py-2">
                 <div className="container">
 
-                    <div className="image w-full rounded-2xl md:rounded-4xl overflow-hidden shadow-lg">
+                    <div className="image w-[100%] rounded-2xl md:rounded-4xl overflow-hidden bg-amber-800 shadow-lg">
                         <Image
-                            src={recipe.image}
+                            src={recipe.image_url}
                             alt={recipe.title}
                             className='w-full h-full object-cover'
                             width={600}
@@ -99,18 +112,22 @@ const page = () => {
                             <div className="bg-white mb-6 p-12">
                                 <h2 className='text-2xl md:text-3xl font-lora font-semibold mb-6'>Ingredients</h2>
                                 <ul className='ps-10 recipeIngredients'>
-                                    <li className='text-base text-gray-700 ingredient mb-4'>1 Cup - Lorem ipsum</li>
-                                    <li className='text-base text-gray-700 ingredient mb-4'>1 Cup - Lorem ipsum</li>
-                                    <li className='text-base text-gray-700 ingredient mb-4'>1 Cup - Lorem ipsum</li>
+                                    {
+                                        recipe.ingredients.map((ingredient, i) => (
+                                            <li key={i} className='text-base text-gray-700 ingredient mb-4'>{ingredient}</li>
+                                        ))
+                                    }
                                 </ul>
 
                             </div>
                             <div className='mb-6'>
                                 <h2 className='text-2xl md:text-3xl font-lora font-semibold mb-6'>Directions</h2>
                                 <ul className='text-gray-700 text-lg leading-relaxed list-decimal ps-4'>
-                                    <li className='text-lg text-gray-700 mb-4'>Lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui consectetur necessitatibus magnam voluptatem nihil, fugit quod facere quam neque </li>
-                                    <li className='text-lg text-gray-700 mb-4'>Lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui consectetur necessitatibus </li>
-                                    <li className='text-lg text-gray-700 mb-4'>Lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit</li>
+                                    {
+                                        recipe.directions.map((direction, i) => (
+                                            <li key={i} className='mb-4'>{direction}</li>
+                                        ))
+                                    }
                                 </ul>
                             </div>
                             <div className="mb-6">
@@ -118,7 +135,7 @@ const page = () => {
                                     Inspiration Video
                                 </h2>
                                 <iframe
-                                    src="https://www.youtube.com/embed/4kyTkEItmDc"
+                                    src={recipe.video_url || "https://www.youtube.com/embed/4kyTkEItmDc"}
                                     frameBorder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowFullScreen
@@ -136,8 +153,8 @@ const page = () => {
                                 <div className="chef mb-8">
                                     <div className="image mx-auto rounded-4xl overflow-hidden mb-4">
                                         <Image
-                                            src={recipe.chef.avatar}
-                                            alt={`Chef-${recipe.chef.name}`}
+                                            src={recipe.chef.avatar_url || "/images/chef1.png"}
+                                            alt={`Chef-${recipe.chef.full_name}`}
                                             className='w-full h-full object-cover'
                                             width={1000}
                                             height={1000}

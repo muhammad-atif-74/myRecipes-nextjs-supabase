@@ -69,11 +69,11 @@ const RecipeCard = ({ recipe }) => {
         )
     }
 
-    useEffect(() => {
-        getImageUrl(safeRecipe.image_url).then((url) => {
-            setImageUrl(url)
-        }).catch(() => setImageError(true));
-    }, [safeRecipe.image_url]);
+    // useEffect(() => {
+    //     getImageUrl(safeRecipe.image_url).then((url) => {
+    //         setImageUrl(url)
+    //     }).catch(() => setImageError(true));
+    // }, [safeRecipe.image_url]);
 
     return (
         <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group border border-gray-100 hover:border-primary/20">
@@ -85,7 +85,7 @@ const RecipeCard = ({ recipe }) => {
 
                 {!imageError ? (
                     <Image
-                        src={imageUrl || "/fallback.jpg"}
+                        src={safeRecipe.image_url || "/fallback.jpg"}
                         alt={safeRecipe.title}
                         fill
                         className={`object-cover group-hover:scale-105 transition-transform duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}

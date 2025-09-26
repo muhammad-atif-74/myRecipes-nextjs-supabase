@@ -17,6 +17,7 @@ export default function AuthClient() {
         })
 
         const { data } = supabase.auth.onAuthStateChange(async (_event, session) => {
+            console.log("State Changed: ", _event, session)
             if (session) {
                 setUser(session?.user);
                 await ensureUserProfile(session.user);
